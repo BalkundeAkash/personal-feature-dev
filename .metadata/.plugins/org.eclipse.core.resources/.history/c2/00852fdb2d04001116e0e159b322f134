@@ -1,0 +1,11 @@
+package com.company.approval.enums;
+
+public enum Role {
+    EMPLOYEE,
+    MANAGER
+}
+package com.company.approval.enums;
+
+public class Role {
+
+}

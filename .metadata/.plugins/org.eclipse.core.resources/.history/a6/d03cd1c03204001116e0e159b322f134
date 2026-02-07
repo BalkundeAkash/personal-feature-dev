@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pending Requests</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Pending Requests (Amit)</h2>
+  <div id="requests"></div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  loadPendingRequests();
+</script>
+</body>
+</html>

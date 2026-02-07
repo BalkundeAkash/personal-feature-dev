@@ -1,0 +1,5 @@
+package com.company.approval.dto;
+
+public class LoginRequestDto {
+
+}

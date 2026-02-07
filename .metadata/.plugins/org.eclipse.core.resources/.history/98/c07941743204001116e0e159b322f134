@@ -1,0 +1,82 @@
+const BASE_URL = "http://localhost:8080/api/requests";
+
+// Rajesh creates a request
+function createRequest() {
+
+  const userId = document.getElementById("userId").value;
+
+  const requestData = {
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    amount: document.getElementById("amount").value
+  };
+
+  fetch(`${BASE_URL}/create/${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(requestData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to create request");
+    }
+    alert("Request submitted successfully");
+  tells})
+  .catch(error => alert(error.message));
+}
+
+// Amit views pending requests
+function loadPendingRequests() {
+  fetch(`${BASE_URL}/pending`)
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("requests");
+      container.innerHTML = "";
+
+      data.forEach(req => {
+        container.innerHTML += `
+          <div class="card">
+            <h4>${req.title}</h4>
+            <p>${req.description}</p>
+            <p><b>Amount:</b> ${req.amount}</p>
+
+            <input id="approver-${req.id}" placeholder="Approver ID (Amit)">
+            <input id="remarks-${req.id}" placeholder="Remarks">
+
+            <button onclick="approve(${req.id})">Approve</button>
+            <button class="reject" onclick="reject(${req.id})">Reject</button>
+          </div>
+        `;
+      });
+    });
+}
+
+// Approve request
+function approve(requestId) {
+  const approverId = document.getElementById(`approver-${requestId}`).value;
+  const remarks = document.getElementById(`remarks-${requestId}`).value;
+
+  fetch(`${BASE_URL}/${requestId}/approve/${approverId}?remarks=${remarks}`, {
+    method: "PUT"
+  })
+  .then(() => {
+    alert("Request approved");
+    loadPendingRequests();
+  });
+}
+
+// Reject request
+function reject(requestId) {
+  const approverId = document.getElementById(`approver-${requestId}`).value;
+  const remarks = document.getElementById(`remarks-${requestId}`).value;
+
+  fetch(`${BASE_URL}/${requestId}/reject/${approverId}?remarks=${remarks}`, {
+    method: "PUT"
+  })
+  .then(() => {
+    alert("Request rejected");
+    loadPendingRequests();
+  });
+}

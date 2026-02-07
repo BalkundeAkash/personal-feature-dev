@@ -1,0 +1,15 @@
+package com.company.approval.repository;
+
+import com.company.approval.entity.PurchaseRequest;
+import com.company.approval.enums.RequestStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface PurchaseRequestRepository
+        extends JpaRepository<PurchaseRequest, Long> {
+
+    List<PurchaseRequest> findByStatus(RequestStatus status);
+
+    List<PurchaseRequest> findByRequestedById(Long userId);
+}

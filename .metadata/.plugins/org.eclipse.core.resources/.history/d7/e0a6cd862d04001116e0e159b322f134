@@ -1,0 +1,5 @@
+package com.company.approval.enums;
+
+public class Role {
+
+}

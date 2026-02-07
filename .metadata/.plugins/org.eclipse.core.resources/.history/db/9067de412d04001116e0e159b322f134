@@ -1,0 +1,22 @@
+public UserResponseDto createUser(UserRequestDto dto) {
+
+    if (userRepository.existsByEmail(dto.getEmail())) {
+        throw new RuntimeException("Email already exists");
+    }
+
+    User user = User.builder()
+            .name(dto.getName())
+            .email(dto.getEmail())
+            .password(dto.getPassword()) // later encode
+            .role(dto.getRole())
+            .build();
+
+    User savedUser = userRepository.save(user);
+
+    return UserResponseDto.builder()
+            .id(savedUser.getId())
+            .name(savedUser.getName())
+            .email(savedUser.getEmail())
+            .role(savedUser.getRole())
+            .build();
+}
